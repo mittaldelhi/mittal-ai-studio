@@ -1,36 +1,35 @@
-import Link from "next/link";
-import Image from "next/image";
-import { LogoutButton } from "@/components/auth/LogoutButton";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { PortalSidebar } from "@/components/portal/PortalSidebar";
 import { hasActivePlan as getHasActivePlan } from "@/lib/server/subscription";
 import type { SessionUser } from "@/lib/server/supabase-rest";
 
 const customerLinks = [
-  ["Overview", "/dashboard"],
-  ["Profile", "/dashboard/profile"],
-  ["Password", "/dashboard/password"],
+  { label: "Overview", href: "/dashboard", short: "OV" },
+  { label: "Profile", href: "/dashboard/profile", short: "PR" },
+  { label: "Password", href: "/dashboard/password", short: "PW" },
 ];
 
 const paidLinks = [
-  ["Payments", "/dashboard/payments"],
-  ["Support", "/dashboard/support"],
-  ["Complaints", "/dashboard/complaints"],
-  ["Reviews", "/dashboard/reviews"],
-  ["Feedback", "/dashboard/feedback"],
+  { label: "Payments", href: "/dashboard/payments", short: "PY" },
+  { label: "Support", href: "/dashboard/support", short: "SP" },
+  { label: "Complaints", href: "/dashboard/complaints", short: "CP" },
+  { label: "Reviews", href: "/dashboard/reviews", short: "RV" },
+  { label: "Feedback", href: "/dashboard/feedback", short: "FB" },
 ];
 
 const adminLinks = [
-  ["Admin", "/admin"],
-  ["Users", "/admin/users"],
-  ["Enquiries", "/admin/enquiries"],
-  ["Orders", "/admin/orders"],
-  ["Payments", "/admin/payments"],
-  ["Support", "/admin/support"],
-  ["Complaints", "/admin/complaints"],
-  ["Reviews", "/admin/reviews"],
-  ["Feedback", "/admin/feedback"],
-  ["Work", "/admin/work"],
-  ["Analytics", "/admin/analytics"],
-  ["Plans", "/admin/settings/plans"],
+  { label: "Admin", href: "/admin", short: "AD" },
+  { label: "Users", href: "/admin/users", short: "US" },
+  { label: "Enquiries", href: "/admin/enquiries", short: "EQ" },
+  { label: "Orders", href: "/admin/orders", short: "OR" },
+  { label: "Payments", href: "/admin/payments", short: "PY" },
+  { label: "Support", href: "/admin/support", short: "SP" },
+  { label: "Complaints", href: "/admin/complaints", short: "CP" },
+  { label: "Reviews", href: "/admin/reviews", short: "RV" },
+  { label: "Feedback", href: "/admin/feedback", short: "FB" },
+  { label: "Work", href: "/admin/work", short: "WK" },
+  { label: "Analytics", href: "/admin/analytics", short: "AN" },
+  { label: "Plans", href: "/admin/settings/plans", short: "PL" },
 ];
 
 export async function PortalShell({
@@ -50,45 +49,30 @@ export async function PortalShell({
   const isPrivileged = user.profile?.role === "admin" || user.profile?.role === "support";
   const effectiveHasActivePlan = admin || isPrivileged || hasActivePlan || (await getHasActivePlan(user.id));
   const links = admin ? adminLinks : [...customerLinks, ...(effectiveHasActivePlan ? paidLinks : [])];
+  const accountLabel = admin ? `${roleLabel} access` : effectiveHasActivePlan ? "Paid customer" : "Free account";
 
   return (
     <main className="portal-page">
-      <aside className="portal-sidebar">
-        <Link className="brand portal-brand" href="/">
-          Mittal AI Studio
-        </Link>
-        <div className="portal-user">
-          <div className="portal-avatar">
-            {user.profile?.avatar_url ? (
-              <Image src={user.profile.avatar_url} alt="" width={48} height={48} />
-            ) : (
-              <span>{user.name.slice(0, 1).toUpperCase()}</span>
-            )}
-          </div>
-          <div>
-            <strong>{user.name}</strong>
-            <span>{admin ? `${roleLabel} access` : effectiveHasActivePlan ? "Paid customer" : "Free account"}</span>
-          </div>
-        </div>
-        {!admin && !effectiveHasActivePlan ? (
-          <Link className="nav-cta" href="/pricing">
-            Unlock Full Dashboard
-          </Link>
-        ) : null}
-        <nav>
-          {links.map(([label, href]) => (
-            <Link key={href} href={href}>
-              {label}
-            </Link>
-          ))}
-        </nav>
-        <LogoutButton />
-      </aside>
+      <PortalSidebar
+        accountLabel={accountLabel}
+        admin={admin}
+        avatarUrl={user.profile?.avatar_url}
+        links={links}
+        roleLabel={roleLabel}
+        showUpgrade={!admin && !effectiveHasActivePlan}
+        userName={user.name}
+      />
       <section className="portal-main">
-        <div className="portal-heading">
-          <span className="eyebrow">{admin ? "Admin CRM" : "Customer Portal"}</span>
-          <h1>{title}</h1>
-        </div>
+        <header className="portal-topbar">
+          <div className="portal-heading">
+            <span className="eyebrow">{admin ? "Admin CRM" : "Customer Portal"}</span>
+            <h1>{title}</h1>
+          </div>
+          <div className="portal-topbar-actions">
+            <span>{accountLabel}</span>
+            <ThemeToggle />
+          </div>
+        </header>
         {children}
       </section>
     </main>

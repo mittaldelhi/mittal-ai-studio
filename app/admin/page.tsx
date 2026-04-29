@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { EmptyState, SectionCard, StatCard } from "@/components/portal/DashboardPrimitives";
 import { PortalShell } from "@/components/portal/PortalShell";
 import { requireAdmin } from "@/lib/server/admin";
 import { supabaseRest } from "@/lib/server/supabase-rest";
@@ -30,33 +31,51 @@ export default async function AdminPage() {
   const paidUsers = new Set(payments.filter((payment) => payment.status === "paid").map((payment) => payment.user_id)).size;
   const openThreads = threads.filter((thread) => thread.status !== "closed").length;
   const openComplaints = complaints.filter((complaint) => complaint.status !== "closed").length;
+  const activity = [...enquiries.slice(0, 3), ...payments.slice(0, 3), ...complaints.slice(0, 3)];
 
   return (
     <PortalShell title="Admin Control Center" user={user} admin>
+      <section className="dashboard-hero">
+        <div>
+          <span>Operations overview</span>
+          <h2>Manage leads, clients, support, work, and payments from one clean workspace.</h2>
+        </div>
+        <Link className="button primary" href="/admin/enquiries">
+          Review Enquiries
+        </Link>
+      </section>
       <div className="metric-grid">
-        <article><span>Total Users</span><strong>{users.length}</strong></article>
-        <article><span>Paid Users</span><strong>{paidUsers}</strong></article>
-        <article><span>New Enquiries</span><strong>{enquiries.filter((item) => item.status === "new").length}</strong></article>
-        <article><span>Open Support</span><strong>{openThreads}</strong></article>
-        <article><span>Open Complaints</span><strong>{openComplaints}</strong></article>
+        <StatCard detail="All portal accounts" label="Total users" tone="blue" value={users.length} />
+        <StatCard detail="Customers with paid plan" label="Paid users" tone="green" value={paidUsers} />
+        <StatCard detail="Needs first response" label="New enquiries" tone="violet" value={enquiries.filter((item) => item.status === "new").length} />
+        <StatCard detail="Active conversations" label="Open support" tone="amber" value={openThreads} />
+        <StatCard detail="Needs attention" label="Open complaints" tone="slate" value={openComplaints} />
       </div>
-      <div className="data-card">
-        <h2>Latest activity</h2>
-        {[...enquiries.slice(0, 3), ...payments.slice(0, 3), ...complaints.slice(0, 3)].map((item) => (
-          <p key={item.id}>
-            <strong>{"name" in item ? "Enquiry" : "plan_name" in item ? "Payment" : "Complaint"}:</strong>{" "}
-            {"name" in item ? item.name : "plan_name" in item ? item.plan_name : item.title}
-          </p>
-        ))}
-      </div>
-      <div className="metric-grid">
-        {cards.map(([label, href]) => (
-          <Link className="data-card" href={href} key={href}>
-            <strong>{label}</strong>
-            <p>Open {label.toLowerCase()} management</p>
-          </Link>
-        ))}
-      </div>
+      <SectionCard action={{ label: "Open enquiries", href: "/admin/enquiries" }} eyebrow="Live feed" title="Latest activity">
+        {activity.length ? (
+          <div className="activity-list">
+            {activity.map((item) => (
+              <div className="activity-row" key={item.id}>
+                <span>{"name" in item ? "Enquiry" : "plan_name" in item ? "Payment" : "Complaint"}</span>
+                <strong>{"name" in item ? item.name : "plan_name" in item ? item.plan_name : item.title}</strong>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <EmptyState body="New enquiries, payments, and complaints will appear here." title="No recent activity yet" />
+        )}
+      </SectionCard>
+      <SectionCard eyebrow="Workspace" title="Admin modules">
+        <div className="module-grid">
+          {cards.map(([label, href]) => (
+            <Link className="module-card" href={href} key={href}>
+              <span>{label.slice(0, 2).toUpperCase()}</span>
+              <strong>{label}</strong>
+              <p>Open {label.toLowerCase()} management</p>
+            </Link>
+          ))}
+        </div>
+      </SectionCard>
     </PortalShell>
   );
 }
