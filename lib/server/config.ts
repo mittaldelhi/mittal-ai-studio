@@ -1,5 +1,15 @@
 export function getSiteUrl() {
-  return process.env.NEXT_PUBLIC_SITE_URL || "http://127.0.0.1:3000";
+  const explicitUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+
+  if (explicitUrl) {
+    return explicitUrl.replace(/\/$/, "");
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`.replace(/\/$/, "");
+  }
+
+  return "http://127.0.0.1:3000";
 }
 
 export function getSupabaseConfig() {
