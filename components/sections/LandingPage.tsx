@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { FormEvent, Suspense, useMemo, useState } from "react";
+import { CSSProperties, FormEvent, Suspense, useMemo, useState } from "react";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { WorkSection } from "@/components/sections/WorkSection";
 import {
@@ -46,6 +46,10 @@ declare global {
 
 function formatPrice(price: number | null) {
   return price === null ? "Custom" : `Rs. ${price.toLocaleString("en-IN")}`;
+}
+
+function serviceImageStyle(imageUrl?: string | null) {
+  return imageUrl ? ({ "--service-image": `url(${imageUrl})` } as CSSProperties) : undefined;
 }
 
 function OauthAlert() {
@@ -107,8 +111,10 @@ export function ServicesPage() {
       <section className="section">
         <div className="container services-grid">
           {services.map((service, index) => (
-            <article className="service-card" key={service.slug}>
-              <div className="icon-chip">{String(index + 1).padStart(2, "0")}</div>
+            <article className={`service-card service-card-visual service-${service.slug}`} key={service.slug}>
+              <div className={service.imageUrl ? "service-visual has-image" : "service-visual"} style={serviceImageStyle(service.imageUrl)}>
+                <div className="icon-chip">{String(index + 1).padStart(2, "0")}</div>
+              </div>
               <h3>{service.title}</h3>
               <p>{service.description}</p>
               <span>{service.outcome}</span>

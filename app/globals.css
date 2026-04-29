@@ -2187,13 +2187,134 @@ pre {
   justify-items: center;
 }
 
-.services-page .service-card .icon-chip {
-  margin-inline: auto;
+.services-page .service-card-visual {
+  overflow: hidden;
+  padding: 0;
+  text-align: left;
+}
+
+.services-page .service-card-visual h3,
+.services-page .service-card-visual p,
+.services-page .service-card-visual > span {
+  width: 100%;
+  padding-inline: 22px;
+  text-align: center;
+}
+
+.services-page .service-card-visual h3 {
+  margin-top: 18px;
+}
+
+.services-page .service-card-visual > span {
+  padding-bottom: 22px;
+}
+
+.service-visual {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-height: 148px;
+  place-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px 20px 14px 14px;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.62), transparent 22%),
+    linear-gradient(135deg, rgba(37, 99, 235, 0.14), rgba(124, 58, 237, 0.12));
+}
+
+.service-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--service-image);
+  background-position: center;
+  background-size: cover;
+  opacity: 0;
+  transform: scale(1.02);
+}
+
+.service-visual.has-image::before {
+  opacity: 1;
+}
+
+.service-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(15, 23, 42, 0.2)),
+    radial-gradient(circle at 80% 12%, rgba(255, 255, 255, 0.42), transparent 24%);
+}
+
+.service-visual .icon-chip {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.86);
+  color: #1d4ed8;
+  backdrop-filter: blur(10px);
+}
+
+.service-website-dev .service-visual {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(14, 165, 233, 0.13));
+}
+
+.service-google-business .service-visual {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(59, 130, 246, 0.12));
+}
+
+.service-ai-chatbot .service-visual {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.16), rgba(37, 99, 235, 0.12));
+}
+
+.service-mobile-app .service-visual {
+  background: linear-gradient(135deg, rgba(244, 114, 182, 0.14), rgba(124, 58, 237, 0.12));
+}
+
+.service-ai-automation .service-visual {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(37, 99, 235, 0.12));
+}
+
+.service-whatsapp .service-visual {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(20, 184, 166, 0.12));
+}
+
+.service-seo .service-visual {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.14), rgba(99, 102, 241, 0.12));
+}
+
+.service-branding .service-visual {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.14), rgba(245, 158, 11, 0.12));
+}
+
+.service-dashboard .service-visual {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.1), rgba(37, 99, 235, 0.13));
+}
+
+.service-content .service-visual {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(16, 185, 129, 0.12));
 }
 
 :root[data-theme="dark"] .premium-subpage .audience-strip {
   border-color: rgba(226, 232, 240, 0.12);
   background: rgba(255, 255, 255, 0.02);
+}
+
+:root[data-theme="dark"] .service-visual {
+  border-color: rgba(226, 232, 240, 0.1);
+}
+
+:root[data-theme="dark"] .service-visual::after {
+  background:
+    linear-gradient(180deg, rgba(2, 6, 23, 0.04), rgba(2, 6, 23, 0.3)),
+    radial-gradient(circle at 80% 12%, rgba(255, 255, 255, 0.18), transparent 24%);
+}
+
+:root[data-theme="dark"] .service-visual .icon-chip {
+  background: rgba(15, 23, 42, 0.72);
+  color: #dbeafe;
+  box-shadow: inset 0 0 0 1px rgba(226, 232, 240, 0.12);
 }
 
 .premium-subpage .service-card,
@@ -2930,10 +3051,23 @@ pre {
   background-size: cover;
 }
 
+.premium-work-preview.has-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 18, 38, 0.02), rgba(8, 18, 38, 0.22));
+  pointer-events: none;
+}
+
+:root[data-theme="dark"] .premium-work-preview.has-image::after {
+  background: linear-gradient(180deg, rgba(2, 6, 23, 0), rgba(2, 6, 23, 0.16));
+}
+
 .premium-work-category {
   position: absolute;
   top: 14px;
   left: 14px;
+  z-index: 1;
   border: 1px solid rgba(255, 255, 255, 0.42);
   border-radius: 999px;
   padding: 7px 11px;
@@ -2975,6 +3109,7 @@ pre {
   position: absolute;
   right: 14px;
   bottom: 14px;
+  z-index: 1;
   border-radius: 999px;
   padding: 7px 11px;
   background: rgba(7, 19, 45, 0.78);

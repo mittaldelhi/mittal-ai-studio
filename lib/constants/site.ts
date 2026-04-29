@@ -3,6 +3,7 @@ export type Service = {
   title: string;
   description: string;
   outcome: string;
+  imageUrl?: string | null;
 };
 
 export type PortfolioProject = {

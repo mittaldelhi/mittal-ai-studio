@@ -29,7 +29,7 @@ function WorkPreview({ project }: { project: PortfolioProject }) {
   const imageUrl = getWorkImageUrl(project.imageUrl);
   const style = imageUrl
     ? {
-        backgroundImage: `linear-gradient(180deg, rgba(8, 18, 38, 0.08), rgba(8, 18, 38, 0.54)), url(${imageUrl})`,
+        backgroundImage: `url(${imageUrl})`,
       }
     : undefined;
 
