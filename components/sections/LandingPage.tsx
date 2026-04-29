@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, Suspense, useMemo, useState } from "react";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { WorkSection } from "@/components/sections/WorkSection";
 import {
@@ -74,7 +74,9 @@ function OauthAlert() {
 export function LandingPage() {
   return (
     <main id="top" className="premium-home">
-      <OauthAlert />
+      <Suspense fallback={null}>
+        <OauthAlert />
+      </Suspense>
       <HeroSection />
     </main>
   );
