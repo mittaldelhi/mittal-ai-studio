@@ -21,6 +21,7 @@ const adminLinks = [
   { label: "Admin", href: "/admin", short: "AD" },
   { label: "Users", href: "/admin/users", short: "US" },
   { label: "Enquiries", href: "/admin/enquiries", short: "EQ" },
+  { label: "Chat Leads", href: "/admin/chat-leads", short: "CL" },
   { label: "Orders", href: "/admin/orders", short: "OR" },
   { label: "Payments", href: "/admin/payments", short: "PY" },
   { label: "Support", href: "/admin/support", short: "SP" },

@@ -18,6 +18,9 @@ export const adminTables = [
   "analytics_events",
   "portfolio_projects",
   "site_settings",
+  "chat_sessions",
+  "chat_messages",
+  "chat_leads",
 ] as const;
 
 export type AdminTable = (typeof adminTables)[number];

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { ChatWidget } from "@/components/chatbot/ChatWidget";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -56,6 +57,7 @@ export default function RootLayout({
           }}
         />
         {children}
+        <ChatWidget />
       </body>
     </html>
   );

@@ -8,6 +8,7 @@ import type { Complaint, Enquiry, Payment, Profile, SupportThread } from "@/lib/
 const cards = [
   ["Users", "/admin/users"],
   ["Enquiries", "/admin/enquiries"],
+  ["Chat Leads", "/admin/chat-leads"],
   ["Orders", "/admin/orders"],
   ["Payments", "/admin/payments"],
   ["Support", "/admin/support"],

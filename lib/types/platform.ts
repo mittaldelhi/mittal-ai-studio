@@ -132,3 +132,40 @@ export type SiteSetting = {
   created_at: string;
   updated_at: string;
 };
+
+export type ChatLead = {
+  id: string;
+  session_id: string | null;
+  name: string;
+  phone: string;
+  email: string | null;
+  business_name: string | null;
+  service_interest: string | null;
+  budget_range: string | null;
+  timeline: string | null;
+  city: string | null;
+  message: string | null;
+  status: "new" | "contacted" | "converted" | "lost";
+  source: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ChatSession = {
+  id: string;
+  visitor_id: string;
+  started_at: string;
+  ended_at: string | null;
+  status: string;
+  source_page: string | null;
+  user_agent: string | null;
+  created_at: string;
+};
+
+export type ChatStoredMessage = {
+  id: string;
+  session_id: string;
+  sender_type: "user" | "bot" | "admin";
+  message: string;
+  created_at: string;
+};
