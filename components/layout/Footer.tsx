@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { businessInfo } from "@/lib/constants/site";
+import { businessInfo, socialLinks } from "@/lib/constants/site";
 
 export function Footer() {
   return (
@@ -18,6 +18,14 @@ export function Footer() {
           <span>Websites</span>
           <span>Automation</span>
           <span>Local SEO</span>
+        </div>
+        <div className="footer-social-links" aria-label="Mittal AI Studio social links">
+          {socialLinks.map((social) => (
+            <a href={social.href} key={social.label} target="_blank" rel="noreferrer" aria-label={social.label}>
+              <span>{social.short}</span>
+              {social.label}
+            </a>
+          ))}
         </div>
       </div>
       <div className="footer-card footer-links-card">

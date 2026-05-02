@@ -1,6 +1,6 @@
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
-import { businessInfo } from "@/lib/constants/site";
+import { businessInfo, socialLinks } from "@/lib/constants/site";
 
 export function CTASection() {
   return (
@@ -17,6 +17,14 @@ export function CTASection() {
             <Button href={businessInfo.whatsappUrl} external variant="secondary">
               Continue on WhatsApp
             </Button>
+          </div>
+          <div className="premium-social-row" aria-label="Social media links">
+            {socialLinks.map((social) => (
+              <a href={social.href} key={social.label} target="_blank" rel="noreferrer">
+                <span>{social.short}</span>
+                {social.label}
+              </a>
+            ))}
           </div>
         </div>
       </Container>

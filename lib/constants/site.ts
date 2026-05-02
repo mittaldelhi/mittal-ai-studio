@@ -39,6 +39,24 @@ export const businessInfo = {
     "https://wa.me/919999081105?text=Hi%20Mittal%20AI%20Studio%2C%20I%20want%20to%20book%20a%20free%20AI%20business%20audit.",
 };
 
+export const socialLinks = [
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/mittalaistudio",
+    short: "Fb",
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@mittalaistudio",
+    short: "Yt",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/mittalaistudio",
+    short: "Ig",
+  },
+];
+
 export const stats = [
   { value: "50+", label: "Local brands served" },
   { value: "3x", label: "Average enquiry growth" },

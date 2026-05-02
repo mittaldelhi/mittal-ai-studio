@@ -1422,6 +1422,53 @@ figcaption {
   font-weight: 850;
 }
 
+.footer-social-links,
+.premium-social-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  width: 100%;
+}
+
+.footer-social-links {
+  margin-top: 14px;
+}
+
+.footer-social-links a,
+.premium-social-row a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  border: 1px solid rgba(37, 99, 235, 0.14);
+  border-radius: 999px;
+  padding: 7px 11px 7px 8px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #1e293b;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.footer-social-links a span,
+.premium-social-row a span {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 950;
+}
+
+.footer-social-links a:hover,
+.premium-social-row a:hover {
+  border-color: rgba(37, 99, 235, 0.28);
+  background: rgba(37, 99, 235, 0.07);
+  color: #1d4ed8;
+}
+
 .footer-grid,
 .footer-contact {
   align-items: flex-start;
@@ -1506,6 +1553,13 @@ figcaption {
   border-color: rgba(147, 197, 253, 0.18);
   background: rgba(147, 197, 253, 0.1);
   color: #bfdbfe;
+}
+
+:root[data-theme="dark"] .footer-social-links a,
+:root[data-theme="dark"] .premium-social-row a {
+  border-color: rgba(147, 197, 253, 0.16);
+  background: rgba(255, 255, 255, 0.055);
+  color: #dbeafe;
 }
 
 :root[data-theme="dark"] .footer-grid a:hover {
@@ -3348,6 +3402,11 @@ pre {
   margin: 0;
   font-size: clamp(15px, 1.45vw, 16px);
   line-height: 1.55;
+}
+
+.premium-social-row {
+  justify-content: center;
+  margin-top: 18px;
 }
 
 @media (min-width: 761px) {
