@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://mittalaistudio.com";
   const now = new Date();
-  const publicRoutes = ["", "/services", "/portfolio", "/pricing", "/process", "/about", "/contact"];
+  const publicRoutes = ["", "/services", "/portfolio", "/pricing", "/process", "/about", "/contact", "/privacy", "/terms"];
 
   return publicRoutes.map((route, index) => ({
       url: `${baseUrl}${route}`,

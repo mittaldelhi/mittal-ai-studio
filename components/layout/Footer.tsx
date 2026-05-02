@@ -40,6 +40,8 @@ export function Footer() {
           <Link href="/process">Process</Link>
           <Link href="/pricing">Pricing</Link>
           <Link href="/contact">Contact</Link>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
         </div>
       </div>
       <div className="footer-card footer-contact-card">
