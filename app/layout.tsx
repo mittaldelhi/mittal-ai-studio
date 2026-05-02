@@ -3,7 +3,7 @@ import { ChatWidget } from "@/components/chatbot/ChatWidget";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mittalai.studio"),
+  metadataBase: new URL("https://mittalaistudio.com"),
   title: {
     default: "Mittal AI Studio | AI Solutions for Local Businesses",
     template: "%s | Mittal AI Studio",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Mittal AI Studio",
     description: "Premium AI agency for local businesses across Bharat.",
-    url: "https://mittalai.studio",
+    url: "https://mittalaistudio.com",
     siteName: "Mittal AI Studio",
     locale: "en_IN",
     type: "website",

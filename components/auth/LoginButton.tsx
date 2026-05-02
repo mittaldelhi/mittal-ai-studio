@@ -1,4 +1,4 @@
-import { getSiteUrl, getSupabaseConfig } from "@/lib/server/config";
+import { getAuthCallbackUrl, getSupabaseConfig } from "@/lib/server/config";
 
 function getGoogleLoginUrl(next?: string) {
   const { url } = getSupabaseConfig();
@@ -13,11 +13,7 @@ function getGoogleLoginUrl(next?: string) {
 
   const loginUrl = new URL(`${url.replace(/\/$/, "")}/auth/v1/authorize`);
   loginUrl.searchParams.set("provider", "google");
-  const callbackUrl = new URL(`${getSiteUrl()}/auth/callback`);
-  if (next) {
-    callbackUrl.searchParams.set("next", next);
-  }
-  loginUrl.searchParams.set("redirect_to", callbackUrl.toString());
+  loginUrl.searchParams.set("redirect_to", getAuthCallbackUrl(next));
 
   return loginUrl.toString();
 }

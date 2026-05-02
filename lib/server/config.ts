@@ -1,3 +1,5 @@
+export const PRODUCTION_SITE_URL = "https://mittalaistudio.com";
+
 export function getSiteUrl() {
   const explicitUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 
@@ -5,11 +7,21 @@ export function getSiteUrl() {
     return explicitUrl.replace(/\/$/, "");
   }
 
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`.replace(/\/$/, "");
+  if (process.env.NODE_ENV === "production") {
+    return PRODUCTION_SITE_URL;
   }
 
   return "http://127.0.0.1:3000";
+}
+
+export function getAuthCallbackUrl(next?: string) {
+  const callbackUrl = new URL(`${getSiteUrl()}/auth/callback`);
+
+  if (next) {
+    callbackUrl.searchParams.set("next", next);
+  }
+
+  return callbackUrl.toString();
 }
 
 export function getSupabaseConfig() {

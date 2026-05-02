@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/dashboard/"],
       },
     ],
-    sitemap: "https://mittalai.studio/sitemap.xml",
+    sitemap: "https://mittalaistudio.com/sitemap.xml",
   };
 }

@@ -19,7 +19,7 @@ const localBusinessSchema = {
   email: businessInfo.email,
   telephone: businessInfo.phone,
   areaServed: ["Bhiwadi", "Alwar", "Jaipur", "Rajasthan", "India"],
-  url: "https://mittalai.studio",
+  url: "https://mittalaistudio.com",
   sameAs: [businessInfo.whatsappUrl],
   priceRange: "Rs. 4,999 - Rs. 19,999 per year",
   serviceType: ["AI Website Development", "Google Business Optimization", "AI Chatbots", "WhatsApp Automation"],
