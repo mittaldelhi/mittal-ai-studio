@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { createServer } = require("node:http");
-const { createReadStream, existsSync } = require("node:fs");
+const { createReadStream, existsSync, statSync } = require("node:fs");
 const { extname, join, normalize } = require("node:path");
 const next = require("next");
 
@@ -33,15 +33,39 @@ function tryServeNextStatic(request, response) {
   const staticPath = decodeURIComponent(request.url.split("?")[0].replace("/_next/static/", ""));
   const filePath = normalize(join(nextStaticRoot, staticPath));
 
-  if (!filePath.startsWith(nextStaticRoot) || !existsSync(filePath)) {
-    return false;
+  if (!filePath.startsWith(nextStaticRoot)) {
+    response.writeHead(400, { "Content-Type": "text/plain; charset=utf-8" });
+    response.end("Invalid static asset path.");
+    return true;
   }
+
+  if (!existsSync(filePath) || !statSync(filePath).isFile()) {
+    response.writeHead(404, {
+      "Cache-Control": "no-store",
+      "Content-Type": "text/plain; charset=utf-8",
+    });
+    response.end(`Static asset not found. Rebuild and restart the app: ${request.url}`);
+    return true;
+  }
+
+  const stream = createReadStream(filePath);
+
+  stream.on("error", (error) => {
+    console.error(`Static asset read failed for ${request.url}`, error);
+    if (!response.headersSent) {
+      response.writeHead(500, {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/plain; charset=utf-8",
+      });
+    }
+    response.end("Static asset could not be read.");
+  });
 
   response.writeHead(200, {
     "Cache-Control": "public, max-age=31536000, immutable",
     "Content-Type": staticContentTypes[extname(filePath)] || "application/octet-stream",
   });
-  createReadStream(filePath).pipe(response);
+  stream.pipe(response);
 
   return true;
 }
