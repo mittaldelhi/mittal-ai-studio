@@ -34,7 +34,14 @@ const secondaryLinks = [
 
 export function PublicNavClient({ userName, isAdmin, hasDashboard }: PublicNavClientProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const firstName = userName?.split(" ")[0];
+  const displayName = firstName || "Account";
+
+  function closeMenus() {
+    setMenuOpen(false);
+    setAccountOpen(false);
+  }
 
   return (
     <header className="site-header appbar">
@@ -58,23 +65,40 @@ export function PublicNavClient({ userName, isAdmin, hasDashboard }: PublicNavCl
       <div className="nav-actions">
         <ThemeToggle />
         {firstName ? (
-          <>
-            <span className="nav-welcome">Hi, {firstName}</span>
-            <Link className="nav-cta" href="/dashboard">
-              Dashboard
-            </Link>
-            {!hasDashboard ? (
-              <Link className="button secondary optional-action" href="/pricing">
-                Buy Plan
-              </Link>
+          <div className="account-menu">
+            <button
+              aria-expanded={accountOpen}
+              aria-label="Open account menu"
+              className="account-trigger"
+              onClick={() => {
+                setAccountOpen((open) => !open);
+                setMenuOpen(false);
+              }}
+              type="button"
+            >
+              <span>Hi,</span>
+              <strong>{displayName}</strong>
+            </button>
+            {accountOpen ? (
+              <div className="account-popover">
+                <span className="account-label">Signed in as {displayName}</span>
+                <Link href="/dashboard" onClick={closeMenus}>
+                  Dashboard
+                </Link>
+                {isAdmin ? (
+                  <Link href="/admin" onClick={closeMenus}>
+                    Admin Panel
+                  </Link>
+                ) : null}
+                {!hasDashboard ? (
+                  <Link href="/pricing" onClick={closeMenus}>
+                    Buy Plan
+                  </Link>
+                ) : null}
+                <LogoutButton />
+              </div>
             ) : null}
-            {isAdmin ? (
-              <Link className="button secondary optional-action" href="/admin">
-                Admin
-              </Link>
-            ) : null}
-            <LogoutButton />
-          </>
+          </div>
         ) : (
           <Link className="nav-cta" href="/login">
             Sign-in
@@ -87,7 +111,10 @@ export function PublicNavClient({ userName, isAdmin, hasDashboard }: PublicNavCl
           aria-expanded={menuOpen}
           aria-label="Open navigation menu"
           className="icon-button menu-button"
-          onClick={() => setMenuOpen((open) => !open)}
+          onClick={() => {
+            setMenuOpen((open) => !open);
+            setAccountOpen(false);
+          }}
           type="button"
         >
           <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -96,49 +123,55 @@ export function PublicNavClient({ userName, isAdmin, hasDashboard }: PublicNavCl
         </button>
       </div>
       {menuOpen ? (
-        <div className="nav-drawer">
-          <div className="drawer-heading">
-            <strong>Explore Mittal AI Studio</strong>
-            <span>Quick navigation</span>
-          </div>
-          <nav className="drawer-list" aria-label="More navigation">
-            {secondaryLinks.map(([label, href]) => (
-              <Link key={href} href={href} onClick={() => setMenuOpen(false)}>
-                {label}
-              </Link>
-            ))}
-            <a href={businessInfo.whatsappUrl} target="_blank" rel="noreferrer">
-              WhatsApp
-            </a>
-          </nav>
-          <div className="drawer-heading account-heading">
-            <strong>Account</strong>
-            <span>Dashboard and admin access</span>
-          </div>
-          <nav className="drawer-list account-list" aria-label="Account navigation">
-            {firstName ? (
-              <>
-                <Link href="/dashboard" onClick={() => setMenuOpen(false)}>
-                  User Dashboard
+        <>
+          <button className="drawer-backdrop" aria-label="Close navigation menu" onClick={closeMenus} type="button" />
+          <aside className="nav-drawer" aria-label="Navigation drawer">
+            <div className="drawer-heading">
+              <strong>Explore Mittal AI Studio</strong>
+              <span>Quick navigation</span>
+            </div>
+            <nav className="drawer-list" aria-label="More navigation">
+              {secondaryLinks.map(([label, href]) => (
+                <Link key={href} href={href} onClick={closeMenus}>
+                  {label}
                 </Link>
-                {isAdmin ? (
-                  <Link href="/admin" onClick={() => setMenuOpen(false)}>
-                    Admin Panel
+              ))}
+              <a href={businessInfo.whatsappUrl} target="_blank" rel="noreferrer">
+                WhatsApp
+              </a>
+            </nav>
+            <div className="drawer-heading account-heading">
+              <strong>Account</strong>
+              <span>Dashboard and access</span>
+            </div>
+            <nav className="drawer-list account-list" aria-label="Account navigation">
+              {firstName ? (
+                <>
+                  <Link href="/dashboard" onClick={closeMenus}>
+                    User Dashboard
                   </Link>
-                ) : null}
-              </>
-            ) : (
-              <>
-                <Link href="/login" onClick={() => setMenuOpen(false)}>
-                  Sign in
-                </Link>
-                <Link href="/signup" onClick={() => setMenuOpen(false)}>
-                  Create account
-                </Link>
-              </>
-            )}
-          </nav>
-        </div>
+                  {isAdmin ? (
+                    <Link href="/admin" onClick={closeMenus}>
+                      Admin Panel
+                    </Link>
+                  ) : null}
+                  <Link href="/pricing" onClick={closeMenus}>
+                    Plans
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" onClick={closeMenus}>
+                    Sign in
+                  </Link>
+                  <Link href="/signup" onClick={closeMenus}>
+                    Create account
+                  </Link>
+                </>
+              )}
+            </nav>
+          </aside>
+        </>
       ) : null}
     </header>
   );
