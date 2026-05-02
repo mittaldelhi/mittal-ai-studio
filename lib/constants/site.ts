@@ -43,19 +43,16 @@ export const socialLinks = [
   {
     label: "Facebook",
     href: "https://www.facebook.com/mittalaistudio",
-    short: "Fb",
   },
   {
     label: "YouTube",
     href: "https://www.youtube.com/@mittalaistudio",
-    short: "Yt",
   },
   {
     label: "Instagram",
     href: "https://www.instagram.com/mittalaistudio",
-    short: "Ig",
   },
-];
+] as const;
 
 export const stats = [
   { value: "50+", label: "Local brands served" },

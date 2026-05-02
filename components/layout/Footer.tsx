@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { SocialIcon } from "@/components/ui/SocialIcon";
 import { businessInfo, socialLinks } from "@/lib/constants/site";
 
 export function Footer() {
@@ -22,7 +23,9 @@ export function Footer() {
         <div className="footer-social-links" aria-label="Mittal AI Studio social links">
           {socialLinks.map((social) => (
             <a href={social.href} key={social.label} target="_blank" rel="noreferrer" aria-label={social.label}>
-              <span>{social.short}</span>
+              <span>
+                <SocialIcon name={social.label} />
+              </span>
               {social.label}
             </a>
           ))}

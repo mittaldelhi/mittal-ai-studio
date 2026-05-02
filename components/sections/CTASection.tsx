@@ -1,5 +1,6 @@
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
+import { SocialIcon } from "@/components/ui/SocialIcon";
 import { businessInfo, socialLinks } from "@/lib/constants/site";
 
 export function CTASection() {
@@ -21,7 +22,9 @@ export function CTASection() {
           <div className="premium-social-row" aria-label="Social media links">
             {socialLinks.map((social) => (
               <a href={social.href} key={social.label} target="_blank" rel="noreferrer">
-                <span>{social.short}</span>
+                <span>
+                  <SocialIcon name={social.label} />
+                </span>
                 {social.label}
               </a>
             ))}

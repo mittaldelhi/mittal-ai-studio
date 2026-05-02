@@ -1456,10 +1456,30 @@ figcaption {
   height: 26px;
   place-items: center;
   border-radius: 999px;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  background: #ffffff;
   color: #ffffff;
-  font-size: 10px;
-  font-weight: 950;
+}
+
+.footer-social-links a span svg,
+.premium-social-row a span svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+.footer-social-links a[aria-label="Facebook"] span,
+.premium-social-row a[href*="facebook"] span {
+  color: #1877f2;
+}
+
+.footer-social-links a[aria-label="YouTube"] span,
+.premium-social-row a[href*="youtube"] span {
+  color: #ff0000;
+}
+
+.footer-social-links a[aria-label="Instagram"] span,
+.premium-social-row a[href*="instagram"] span {
+  color: #e4405f;
 }
 
 .footer-social-links a:hover,
