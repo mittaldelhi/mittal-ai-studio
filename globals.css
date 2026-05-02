@@ -1766,11 +1766,14 @@ figcaption {
   color: white;
 }
 
-.auth-brand-mark {
-  width: min(210px, 52vw);
+.auth-brand-wordmark {
+  width: min(300px, 100%);
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 24px 50px rgba(59, 130, 246, 0.28));
+  border-radius: 22px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 22px 70px rgba(15, 23, 42, 0.22);
 }
 
 .auth-brand-panel span,
@@ -1860,10 +1863,26 @@ figcaption {
   margin-bottom: 22px;
 }
 
+.auth-logo-surface {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 22px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 16px 48px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="dark"] .auth-logo-surface {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.22);
+}
+
 .auth-logo {
-  width: min(270px, 70vw);
+  width: min(300px, 72vw);
   height: auto;
   object-fit: contain;
+  display: block;
 }
 
 .premium-auth-card .eyebrow {
@@ -3979,7 +3998,7 @@ pre {
     padding: 26px;
   }
 
-  .auth-brand-mark {
+  .auth-brand-wordmark {
     display: none;
   }
 
