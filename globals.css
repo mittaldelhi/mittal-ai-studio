@@ -3760,6 +3760,30 @@ pre {
   gap: 10px;
 }
 
+.portal-home-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  border-radius: 999px;
+  padding: 7px 13px;
+  background: rgba(37, 99, 235, 0.08);
+  color: #1d4ed8;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.portal-home-link:hover {
+  border-color: rgba(37, 99, 235, 0.28);
+  background: rgba(37, 99, 235, 0.13);
+}
+
+.portal-home-link.mobile {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
 .portal-topbar-actions > span {
   border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 999px;
@@ -4133,6 +4157,12 @@ select {
   border-color: rgba(147, 197, 253, 0.18);
   background: rgba(147, 197, 253, 0.09);
   color: #f8fafc;
+}
+
+:root[data-theme="dark"] .portal-home-link {
+  border-color: rgba(147, 197, 253, 0.2);
+  background: rgba(147, 197, 253, 0.1);
+  color: #bfdbfe;
 }
 
 @media (max-width: 1180px) {

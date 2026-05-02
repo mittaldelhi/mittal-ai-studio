@@ -67,6 +67,9 @@ export function PortalSidebar({
           <strong>{admin ? "Admin CRM" : "Client Portal"}</strong>
         </summary>
         <div className="portal-mobile-panel">
+          <Link className="portal-home-link mobile" href="/">
+            Home
+          </Link>
           <PortalNav links={links} pathname={pathname} />
           {showUpgrade ? (
             <Link className="nav-cta" href="/pricing">

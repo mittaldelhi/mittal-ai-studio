@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { PortalSidebar } from "@/components/portal/PortalSidebar";
 import { hasActivePlan as getHasActivePlan } from "@/lib/server/subscription";
@@ -70,6 +71,9 @@ export async function PortalShell({
             <h1>{title}</h1>
           </div>
           <div className="portal-topbar-actions">
+            <Link className="portal-home-link" href="/">
+              Home
+            </Link>
             <span>{accountLabel}</span>
             <ThemeToggle />
           </div>
