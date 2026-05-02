@@ -1,18 +1,18 @@
 import Link from "next/link";
+import { AuthShell } from "@/components/auth/AuthShell";
 import { ResetPasswordForm } from "@/components/auth/ResetPasswordForm";
 
 export default function ResetPasswordPage() {
   return (
-    <main className="auth-page">
-      <section className="auth-card">
-        <span className="eyebrow">Secure Reset</span>
-        <h1>Create a new password</h1>
-        <p>Choose a new password for your Mittal AI Studio account.</p>
+    <AuthShell
+      eyebrow="Secure Reset"
+      title="Create a new password"
+      description="Choose a strong new password for your Mittal AI Studio account."
+    >
         <ResetPasswordForm />
         <Link className="button secondary" href="/">
           Back to website
         </Link>
-      </section>
-    </main>
+    </AuthShell>
   );
 }

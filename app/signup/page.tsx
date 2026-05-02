@@ -1,14 +1,15 @@
 import Link from "next/link";
+import { AuthShell } from "@/components/auth/AuthShell";
 import { LoginButton } from "@/components/auth/LoginButton";
 import { PasswordAuthForm } from "@/components/auth/PasswordAuthForm";
 
 export default function SignUpPage() {
   return (
-    <main className="auth-page">
-      <section className="auth-card">
-        <span className="eyebrow">Create Account</span>
-        <h1>Sign up for Mittal AI Studio</h1>
-        <p>Create your account to buy plans, update your business profile, and talk to support.</p>
+    <AuthShell
+      eyebrow="Create Account"
+      title="Create your account"
+      description="Start your Mittal AI Studio portal for plans, profile updates, project support, and payments."
+    >
         <PasswordAuthForm mode="signup" />
         <div className="auth-divider">
           <span>or</span>
@@ -17,7 +18,6 @@ export default function SignUpPage() {
         <Link className="button secondary" href="/">
           Back to website
         </Link>
-      </section>
-    </main>
+    </AuthShell>
   );
 }

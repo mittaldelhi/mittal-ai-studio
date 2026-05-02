@@ -1,14 +1,15 @@
 import Link from "next/link";
+import { AuthShell } from "@/components/auth/AuthShell";
 import { LoginButton } from "@/components/auth/LoginButton";
 import { PasswordAuthForm } from "@/components/auth/PasswordAuthForm";
 
 export default function SignInPage() {
   return (
-    <main className="auth-page">
-      <section className="auth-card">
-        <span className="eyebrow">Customer Login</span>
-        <h1>Sign in to Mittal AI Studio</h1>
-        <p>Access your dashboard, payments, support, complaints, reviews, and business details.</p>
+    <AuthShell
+      eyebrow="Customer Login"
+      title="Welcome back"
+      description="Access your dashboard, payments, support, reviews, and business details."
+    >
         <PasswordAuthForm mode="signin" />
         <div className="auth-divider">
           <span>or</span>
@@ -17,7 +18,6 @@ export default function SignInPage() {
         <Link className="button secondary" href="/">
           Back to website
         </Link>
-      </section>
-    </main>
+    </AuthShell>
   );
 }

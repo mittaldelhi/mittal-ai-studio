@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AuthShell } from "@/components/auth/AuthShell";
 import { LoginButton } from "@/components/auth/LoginButton";
 import { PasswordAuthForm } from "@/components/auth/PasswordAuthForm";
 import { getSupabaseConfig } from "@/lib/server/config";
@@ -21,11 +22,11 @@ export default async function LoginPage({
   const supabaseCallbackUrl = url ? `${url.replace(/\/$/, "")}/auth/v1/callback` : "https://YOUR-SUPABASE-PROJECT.supabase.co/auth/v1/callback";
 
   return (
-    <main className="auth-page">
-      <section className="auth-card">
-        <span className="eyebrow">Secure Login</span>
-        <h1>Login to Mittal AI Studio</h1>
-        <p>Use email/password or Google to buy a plan, manage your business profile, track payments, and talk to support.</p>
+    <AuthShell
+      eyebrow="Secure Login"
+      title="Welcome back"
+      description="Log in to manage your business profile, payments, project support, and AI growth tools."
+    >
         {errorMessage ? <p className="form-error">{errorMessage}</p> : null}
         <PasswordAuthForm mode="signin" />
         <div className="auth-divider">
@@ -42,7 +43,6 @@ export default async function LoginPage({
         <Link className="button secondary" href="/">
           Back to website
         </Link>
-      </section>
-    </main>
+    </AuthShell>
   );
 }

@@ -33,7 +33,7 @@ export function ForgotPasswordForm() {
     <form className="portal-form auth-form" onSubmit={submit}>
       <label>
         Account email
-        <input autoComplete="email" name="email" required type="email" />
+        <input autoComplete="email" name="email" placeholder="you@business.com" required type="email" />
       </label>
       <button className="button primary" disabled={status === "loading"} type="submit">
         {status === "loading" ? "Sending..." : "Send Reset Link"}

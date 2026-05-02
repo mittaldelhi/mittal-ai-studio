@@ -10,9 +10,18 @@ function PasswordInput({ label, name }: { label: string; name: string }) {
     <label>
       {label}
       <span className="password-field">
-        <input autoComplete="new-password" minLength={6} name={name} required type={visible ? "text" : "password"} />
+        <input autoComplete="new-password" minLength={6} name={name} placeholder={label} required type={visible ? "text" : "password"} />
         <button aria-label={visible ? "Hide password" : "Show password"} onClick={() => setVisible((value) => !value)} type="button">
-          {visible ? "Hide" : "Show"}
+          {visible ? (
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M3 3l18 18M10.58 10.58A2 2 0 0012 14a2 2 0 001.42-.58M9.88 4.24A10.65 10.65 0 0112 4c6 0 9.5 6 9.5 8a8.4 8.4 0 01-2.17 3.64M6.61 6.61C3.98 8.36 2.5 11.05 2.5 12c0 2 3.5 8 9.5 8 1.76 0 3.3-.52 4.6-1.3" />
+            </svg>
+          ) : (
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M2.5 12S6 4 12 4s9.5 8 9.5 8-3.5 8-9.5 8-9.5-8-9.5-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          )}
         </button>
       </span>
     </label>

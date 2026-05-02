@@ -42,6 +42,8 @@ export function Footer() {
           <Link href="/contact">Contact</Link>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
+          <Link href="/shipping-policy">Shipping</Link>
+          <Link href="/cancellation-refund-policy">Refunds</Link>
         </div>
       </div>
       <div className="footer-card footer-contact-card">
