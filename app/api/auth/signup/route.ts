@@ -25,14 +25,19 @@ export async function POST(request: Request) {
   const fullName = readString(body?.full_name);
   const email = readString(body?.email).toLowerCase();
   const password = readString(body?.password);
+  const confirmPassword = readString(body?.confirm_password);
   const { url, anonKey } = getSupabaseConfig();
 
   if (!url || !anonKey) {
     return fail("Supabase URL and anon key are missing in .env.local.", 500);
   }
 
-  if (!fullName || !email || !password) {
-    return fail("Full name, email, and password are required.", 422);
+  if (!fullName || !email || !password || !confirmPassword) {
+    return fail("Full name, email, password, and confirm password are required.", 422);
+  }
+
+  if (password !== confirmPassword) {
+    return fail("Password and confirm password must match.", 422);
   }
 
   if (password.length < 6) {

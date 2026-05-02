@@ -1,26 +1,87 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
+
+function createChallenge() {
+  const left = Math.floor(Math.random() * 8) + 2;
+  const right = Math.floor(Math.random() * 7) + 3;
+
+  return {
+    label: `${left} + ${right}`,
+    answer: String(left + right),
+  };
+}
+
+function PasswordInput({
+  autoComplete,
+  label,
+  name,
+}: {
+  autoComplete: string;
+  label: string;
+  name: string;
+}) {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <label>
+      {label}
+      <span className="password-field">
+        <input autoComplete={autoComplete} minLength={6} name={name} required type={visible ? "text" : "password"} />
+        <button aria-label={visible ? "Hide password" : "Show password"} onClick={() => setVisible((value) => !value)} type="button">
+          {visible ? "Hide" : "Show"}
+        </button>
+      </span>
+    </label>
+  );
+}
 
 export function PasswordAuthForm({ mode }: { mode: "signin" | "signup" }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [challenge, setChallenge] = useState(() => createChallenge());
   const isSignup = mode === "signup";
+  const needsChallenge = !isSignup && failedAttempts >= 3;
+  const passwordHelp = useMemo(
+    () => (isSignup ? "Use at least 6 characters. A longer password with letters, numbers, and symbols is better." : ""),
+    [isSignup],
+  );
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStatus("loading");
     setMessage("");
 
+    const formData = new FormData(event.currentTarget);
+    const values = Object.fromEntries(formData.entries());
+
+    if (isSignup && values.password !== values.confirm_password) {
+      setStatus("error");
+      setMessage("Password and confirm password must match.");
+      return;
+    }
+
+    if (needsChallenge && String(values.security_answer || "").trim() !== challenge.answer) {
+      setStatus("error");
+      setMessage("Security check answer is incorrect. Please try again.");
+      setChallenge(createChallenge());
+      return;
+    }
+
     const response = await fetch(`/api/auth/${mode}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(Object.fromEntries(new FormData(event.currentTarget).entries())),
+      body: JSON.stringify(values),
     });
     const payload = (await response.json().catch(() => null)) as { error?: string; data?: { needsConfirmation?: boolean } } | null;
 
     if (!response.ok) {
+      if (!isSignup) {
+        setFailedAttempts((count) => count + 1);
+        setChallenge(createChallenge());
+      }
       setStatus("error");
       setMessage(payload?.error || "Authentication failed.");
       return;
@@ -32,6 +93,7 @@ export function PasswordAuthForm({ mode }: { mode: "signin" | "signup" }) {
       return;
     }
 
+    setFailedAttempts(0);
     const params = new URLSearchParams(window.location.search);
     window.location.assign(params.get("next") === "pricing" ? "/pricing" : "/dashboard");
   }
@@ -48,14 +110,25 @@ export function PasswordAuthForm({ mode }: { mode: "signin" | "signup" }) {
         Email
         <input autoComplete="email" name="email" required type="email" />
       </label>
-      <label>
-        Password
-        <input autoComplete={isSignup ? "new-password" : "current-password"} minLength={6} name="password" required type="password" />
-      </label>
+      <PasswordInput autoComplete={isSignup ? "new-password" : "current-password"} label="Password" name="password" />
+      {passwordHelp ? <p className="field-help">{passwordHelp}</p> : null}
+      {isSignup ? <PasswordInput autoComplete="new-password" label="Retype password" name="confirm_password" /> : null}
+      {needsChallenge ? (
+        <label className="security-challenge">
+          Security check
+          <span>Solve this to continue: {challenge.label}</span>
+          <input inputMode="numeric" name="security_answer" required />
+        </label>
+      ) : null}
       <button className="button primary" disabled={status === "loading"} type="submit">
         {status === "loading" ? "Please wait..." : isSignup ? "Create Account" : "Sign In"}
       </button>
       {message ? <p className={status === "error" ? "form-error" : "form-success"}>{message}</p> : null}
+      {!isSignup ? (
+        <Link className="auth-forgot-link" href="/forgot-password">
+          Forgot password?
+        </Link>
+      ) : null}
       <p className="auth-switch">
         {isSignup ? "Already have an account?" : "New to Mittal AI Studio?"}{" "}
         <Link href={isSignup ? "/login" : "/signup"}>{isSignup ? "Sign in" : "Create account"}</Link>

@@ -1741,6 +1741,54 @@ figcaption {
   margin-top: 22px;
 }
 
+.password-field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.password-field input {
+  min-width: 0;
+}
+
+.password-field button {
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0 12px;
+  background: rgba(239, 246, 255, 0.82);
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+:root[data-theme="dark"] .password-field button {
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.security-challenge {
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: 16px;
+  padding: 12px;
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.security-challenge span {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.auth-forgot-link {
+  display: inline-flex;
+  width: fit-content;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 900;
+}
+
 .auth-switch {
   margin: 0;
   text-align: center;
